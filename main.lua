@@ -9,9 +9,12 @@ function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
          y1 < y2+h2 and
          y2 < y1+h1
 end
-DOSVGA = love.graphics.newFont("DOSVGA.ttf", 15)
-hero = {}
-hero.x = 25
+font = love.graphics.newImageFont("imagefont.png", -- an imagefont nicked of the love2d wiki
+    " abcdefghijklmnopqrstuvwxyz" ..
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0" ..
+    "123456789.,!?-+/():;%&`'*#=[]\"")
+hero = {} --hero = left player
+hero.x = 25 --villain = right player
 hero.y = 255
 hero.speed = 300
 hero.dir = "left"
@@ -26,24 +29,14 @@ villain.score = 0
 villain.dir = "left"
 villain.l = 20
 villain.h = 80
-slash = {}
-slash.time = 5
-slash.set = "false"
-slash.x = 0
-slash.y = 0
-slash.lx = 0
-slash.ly = 0
-slash.dir = "left"
-slash.speed = 100
-slash.hit = ("false") 
-ball = {}
+ball = {} -- the ball is a little complicated but it doesnt have to be cleaned up now
 ball.speed = 200
 ball.x = 200
 ball.rot = 3
 ball.y = 300
 ball.dir = "left"
 ball.h = 10
-oOoOoOo = false
+oOoOoOo = false --oOoOoOoOoOo
 ball.w = 10
 ball.turn = "up"
 loctest = "false"
@@ -73,14 +66,14 @@ end
 
 ball.y = ball.y + ball.rot*dt
 
-mousex = love.mouse.getX()
+mousex = love.mouse.getX() -- the next comment will explain this
 mousey = love.mouse.getY()
 
-if love.keyboard.isDown("f") then
+if love.keyboard.isDown("f") then --This is used to find pixel positions for balance
 	loctest = "true"
 end
-
-if CheckCollision(hero.x, hero.y, hero.l, hero.h, ball.x, ball.y, ball.w, ball.h) then
+-- this runs the left player
+if CheckCollision(hero.x, hero.y, hero.l, hero.h, ball.x, ball.y, ball.w, ball.h) then -- its fairly obvious what this is for
 	ball.dir = "left"
 	ball.speed = ball.speed * 1.05
 	ball.rot = love.math.random(ball.rot-150, ball.rot+150)
@@ -106,7 +99,7 @@ if love.keyboard.isDown("w") then
 elseif love.keyboard.isDown("s") then
 	hero.y = hero.y + hero.speed*dt
 end
-
+-- this is a copy of the left player with slight modifications for the right player
 if CheckCollision(villain.x, villain.y, villain.l, villain.h, ball.x, ball.y, ball.w, ball.h) then
 	ball.dir = "right"
 	ball.speed = ball.speed * 1.05
@@ -144,19 +137,10 @@ if slash.set == "true" then
 		slash.set = false
 	end
 end
-
-if slash.set == "false" then
-	slash.x = slash.lx
-	slash.y = slash.ly
-elseif slash.set == "true" then
-	if slash.dir == "left" then
-		slash.x = slash.x - slash.speed*dt
-	end
-end
 end
 
 function love.draw()
-love.graphics.setFont(DOSVGA, 14)
+love.graphics.setFont(font, 14)
 love.graphics.print(hero.score, 300, 200, 0, 3)
 
 love.graphics.setColor(0,255,0,255)
@@ -179,9 +163,5 @@ end
 if oOoOoOo == true then
 	love.graphics.print("oOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoOoO",900,900)
 end
-
-if slash.set == "true" then
-	love.graphics.setColor(255, 255, 255, 255)
-	love.graphics.rectangle("fill", slash.x, slash.y, 2, 2)
-end
+-- 0OoO0
 end
