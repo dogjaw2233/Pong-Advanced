@@ -1,4 +1,5 @@
 function love.load()
+love.graphics.setDefaultFilter("nearest", "nearest")-- disables anti aliasing
 -- Collision detection function.
 -- Returns true if two boxes overlap, false if they don't
 -- x1,y1 are the left-top coords of the first box, while w1,h1 are its width and height
@@ -46,7 +47,7 @@ end
 
 function love.update(dt)
 
-if ball.x >= 800 then
+if ball.x >= 800 then --SCORE!!!!!!
 	hero.score = hero.score+1
 elseif ball.x <= 0 then
 	villain.score = villain.score+1
@@ -132,16 +133,12 @@ if love.keyboard.isDown("z") then
 		slash.set = "true"
 	end
 end
-if slash.set == "true" then
-	if slash.x <= slash.lx - 50 then
-		slash.set = false
-	end
-end
 end
 
 function love.draw()
 love.graphics.setFont(font, 14)
-love.graphics.print(hero.score, 300, 200, 0, 3)
+love.graphics.print(hero.score, 100, 500, 0, 3)
+love.graphics.print(villain.score, 700, 100, 0, 3)
 
 love.graphics.setColor(0,255,0,255)
 love.graphics.rectangle("fill", 0, 465, 1, 1)
