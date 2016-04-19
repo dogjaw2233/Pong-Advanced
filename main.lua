@@ -32,7 +32,7 @@ villain.l = 20
 villain.h = 80
 ball = {} -- the ball is a little complicated but it doesnt have to be cleaned up now
 ball.speed = 200
-ball.x = 200
+ball.x = 400
 ball.rot = 3
 ball.y = 300
 ball.dir = "left"
@@ -48,8 +48,12 @@ end
 function love.update(dt)
 
 if ball.x >= 800 then --SCORE!!!!!!
+	ball.x = 400
+	ball.y = 300
 	hero.score = hero.score+1
 elseif ball.x <= 0 then
+	ball.x = 400
+	ball.y = 300
 	villain.score = villain.score+1
 end
 
